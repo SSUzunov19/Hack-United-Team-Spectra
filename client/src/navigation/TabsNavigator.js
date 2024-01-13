@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 import { HomeStackNavigator } from './HomeStackNavigator';
 import { SearchStackNavigator } from './SearchStackNavigator';
@@ -12,9 +12,8 @@ import { SettingsStackNavigator } from './SettingsStackNavigator';
 const Tab = createBottomTabNavigator();
 
 function TabsNavigator() {
-  const getTabBarIcon = (route, focused, color) => {
+  const getTabBarIcon = (route, focused) => {
     let iconName;
-    let type = 'ionicon';
     if (route.name === 'HomeStack') {
       iconName = focused ? 'home' : 'home-outline';
     } else if (route.name === 'SearchStack') {
@@ -24,12 +23,12 @@ function TabsNavigator() {
     } else if (route.name === 'SettingsStack') {
       iconName = focused ? 'settings' : 'settings-outline';
     }
+
     return (
-      <Icon
+      <Ionicons
         name={iconName}
-        type={type}
         size={28}
-        color={color}
+        color={focused ? '#58CC02' : '#c7c7c7'}
       />
     );
   };
