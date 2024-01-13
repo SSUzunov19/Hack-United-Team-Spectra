@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -13,9 +13,13 @@ datasource db {
 
 model Users {
   id        String      @id @default(uuid())
+  name     String
   username String
+  gender String
   email     String   @unique
   password  String
+  aboutMe String?
+  imgUrl String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -50,7 +54,8 @@ model Challenges{
   name      String
   description String
   isFeeApplied Boolean
-  feeAmount Float
+  feeAmount Float?
+  imgUrl String?
   locationId String
   location Locations @relation(fields: [locationId], references: [id])
 
@@ -70,8 +75,6 @@ model UserChallenges{
   challengeId String
   challenge Challenges @relation(fields: [challengeId], references: [id])
   status String
-
-  startedAt DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
