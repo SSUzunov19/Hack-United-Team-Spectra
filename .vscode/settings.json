@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/403c349a-d931-4ddb-a609-46dfce1caace/resourceGroups/hack-united/providers/Microsoft.Web/sites/hack-united-web-app",
+    "appService.deploySubpath": "."
+}
