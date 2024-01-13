@@ -4,7 +4,7 @@ import { Button, Text } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
 import {isPointWithinRadius} from 'geolib';
 import * as Location from 'expo-location';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 
 import ServiceContext from '../../../services/ServiceContext';
 
@@ -14,6 +14,7 @@ export function MapComponent() {
     const [visibleMarkers, setVisibleMarkers] = useState(constantWorldMarkers.map(x=>x));
     const [currentlySelectedMarker,setCurrentlySelectedMarker] = useState(null);
     const [location,setLocation] = useState(null);
+    const [routePolyline,setRoutePolyline] = useState({coordinates:[], points: []});
     const services = useContext(ServiceContext);
 
     // Location data
@@ -29,18 +30,18 @@ export function MapComponent() {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
         })();
-    }, []);
+    }, [location]);
 
     // Get all markers from database
     useEffect(() => {
         (async() => {
             const startPins = await services.Locations.getAllStartPins();
-            console.log(startPins);
             setConstantWorldMarkers(startPins);
             setVisibleMarkers(startPins);
         })();
     },[]);
 
+    // Step counter
     useEffect(() => {
         const subscribe = async () => {
             const isAvailable = await Pedometer.isAvailableAsync();
@@ -57,16 +58,20 @@ export function MapComponent() {
     }, [currentStepCount]);
     
     function openPin(m) {
-        console.log(currentlySelectedMarker)
-        setCurrentlySelectedMarker(m);
-        setVisibleMarkers([m]);
-        // get route
+        if (m.key.startsWith("2!") || currentlySelectedMarker!=null) return;
+
+        (async () => {
+            setCurrentlySelectedMarker(m);
+            const routeData = await services.Locations.getFullRoute(m.key);
+            setRoutePolyline(routeData.polyline);
+            setVisibleMarkers([routeData.markerStart,routeData.markerEnd]);
+        })();
     }
 
     function closePin() {
-        console.log(currentlySelectedMarker)
-        setVisibleMarkers(constantWorldMarkers.map(x=>x));
+        setVisibleMarkers(constantWorldMarkers);
         setCurrentlySelectedMarker(null);
+        setRoutePolyline({coordinates:[], points: []});
     }
 
     function isInsideMarkerArea(radius=25) {
@@ -84,6 +89,8 @@ export function MapComponent() {
                 provider={PROVIDER_GOOGLE}
             >
                 {visibleMarkers.map((m) => <Marker onPress={openPin.bind(this,m)} {...m} />)}
+                <Polyline {...routePolyline} />
+
             </MapView>
             <Text>{currentStepCount}</Text>
             <Button onPress={closePin} title="Close" />

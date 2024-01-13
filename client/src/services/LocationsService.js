@@ -1,8 +1,10 @@
 export default class LocationsService
 {
     route = 'https://hack-united-server.fly.dev/locations/';
+
+    // Works
     get = async (id) => {
-        const res = this.fetch(`${this._baseUrl}${this.route}${id}`, {
+        const res = await fetch(`${this.route}${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -12,6 +14,7 @@ export default class LocationsService
         return data;
     }
 
+    // Works
     getAll = async () => {
         const res = await fetch(this.route);
         const data = await res.json();
@@ -53,6 +56,7 @@ export default class LocationsService
         return data;
     }
 
+    // Works
     getAllStartPins = async () => {
         const data = await this.getAll();
         const res = data.map(x => ({
@@ -64,4 +68,65 @@ export default class LocationsService
         }));
         return res;
     }
+
+    getFullRoute = async (id) => {
+        const markerData = await this.get(id);
+        const routeResponse = await fetch("https://routes.googleapis.com/directions/v2:computeRoutes",{
+            method: 'POST',
+            body: JSON.stringify({
+                origin: {
+                    location: {
+                        latLng: {
+                            latitude: markerData.latitudeStart,
+                            longitude: markerData.longitudeStart,
+                        }
+                    }
+                },
+                destination: {
+                    location: {
+                        latLng: {
+                            latitude: markerData.latitudeEnd,
+                            longitude: markerData.longitudeEnd,
+                        }
+                    }
+                },
+                travelMode: "WALK",
+                units: "METRIC",
+                polylineEncoding: "GEO_JSON_LINESTRING",
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': process.env.GOOGLE_MAPS_API_KEY,
+                'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline'
+            }
+        });
+        const routeData = await routeResponse.json();
+        const returnData = {
+            polyline: {
+                coordinates: routeData["routes"][0]["polyline"]["geoJsonLinestring"]["coordinates"].map(x => ({
+                    latitude: x[1],
+                    longitude: x[0],
+                })),
+                strokeColor: "#00FF00",
+                strokeWidth: 6,
+            },
+            markerStart: {
+                key: markerData.id,
+                coordinate: {
+                    latitude: markerData.latitudeStart,
+                    longitude: markerData.longitudeStart,
+                },
+                pinColor: "#00FF00",
+            },
+            markerEnd: {
+                key: "2!"+markerData.id,
+                coordinate: {
+                    latitude: markerData.latitudeEnd,
+                    longitude: markerData.longitudeEnd,
+                },
+                pinColor: "#FF0000",
+            },
+        }
+        return returnData;
+    };
 }
