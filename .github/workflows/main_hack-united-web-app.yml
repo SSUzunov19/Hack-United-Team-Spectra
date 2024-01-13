@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - hack-united-web-app
 
 on:
@@ -21,21 +24,18 @@ jobs:
       - name: npm install, build, and test
         run: |
           cd server
-          npm install -g @nestjs/cli
-          npm i
-          npm install typescript
+          npm install
           npx prisma generate
-          npx tsc
+          npm run build --if-present
           cp -r node_modules ./dist
-
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./dist/*
+        run: zip release.zip ./server/dist* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: ./release.zip
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip ./node-app/release.zip -d ./server
+        run: unzip release.zip
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -69,3 +69,4 @@ jobs:
           app-name: 'hack-united-web-app'
           slot-name: 'Production'
           package: './server/dist'
+
