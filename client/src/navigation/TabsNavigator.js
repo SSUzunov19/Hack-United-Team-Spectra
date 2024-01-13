@@ -42,6 +42,7 @@ function TabsNavigator() {
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: '#00E124',
         tabBarInactiveTintColor: '#C7C7C7',
+        tabBar: () => null,
       })}
     >
       <Tab.Screen
@@ -51,10 +52,10 @@ function TabsNavigator() {
           focus: () => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
             if (routeName === 'Form') {
-              navigation.setOptions({ tabBarStyle: { display: 'none' } });
+              navigation.setOptions({ tabBarStyle: { display: '' } });
             } else {
               navigation.setOptions({
-                tabBarStyle: { ...styles.tabBar, display: 'flex' },
+                tabBarStyle: { ...styles.tabBar },
               });
             }
           },
