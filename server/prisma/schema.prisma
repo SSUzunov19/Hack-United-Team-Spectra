@@ -9,3 +9,82 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id        String      @id @default(uuid())
+  username String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userChallenge UserChallenges[]
+  userWallet UserWallets[]
+}
+
+model UserWallets{
+  id        String      @id @default(uuid())
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  balance Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Locations{
+  id        String      @id @default(uuid())
+  latitudeStart Float
+  longitudeStart Float
+  latitudeEnd Float
+  longitudeEnd Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  challenges Challenges[]
+}
+
+model Challenges{
+  id        String      @id @default(uuid())
+  name      String
+  description String
+  isFeeApplied Boolean
+  feeAmount Float
+  locationId String
+  location Locations @relation(fields: [locationId], references: [id])
+
+  peopleLimit Int
+  isChallengeCompleted Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userChallenge UserChallenges[]
+}
+
+model UserChallenges{
+  id        String      @id @default(uuid())
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  challengeId String
+  challenge Challenges @relation(fields: [challengeId], references: [id])
+  status String
+
+  startedAt DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userChallengeHistory UserChallengeHistories[]
+}
+
+model UserChallengeHistories{
+  id        String      @id @default(uuid())
+  userChallengeId String
+  userChallenge UserChallenges @relation(fields: [userChallengeId], references: [id])
+
+  timer String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
