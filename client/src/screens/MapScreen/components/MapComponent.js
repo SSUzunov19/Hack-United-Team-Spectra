@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
+import {isPointWithinRadius} from 'geolib';
 import * as Location from 'expo-location';
 
-
-import MapView from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 export function MapComponent() {
     const [currentStepCount, setCurrentStepCount] = useState(0);
-    const [markers, setMarkers] = useState([]);
+    const [constantWorldMarkers, setConstantWorldMarkers] = useState([]);
+    const [visibleMarkers, setVisibleMarkers] = useState(constantWorldMarkers.map(x=>x));
+    const [currentlySelectedMarker,setCurrentlySelectedMarker] = useState(null);
     const [location,setLocation] = useState(null);
 
     useEffect(() => {
@@ -28,32 +30,33 @@ export function MapComponent() {
     // Get all markers from database
     useEffect(() => {
         // fetch
-        setMarkers([
+        setConstantWorldMarkers([
             {
-                latitude: 45.65,
-                longitude: -78.90,
-                title: 'Foo Place',
-                subtitle: '1234 Foo Drive'
+                key: 1,
+                coordinate: {
+                    latitude: 45.65,
+                    longitude: -28.90
+                },
+                pinColor: "#00FF00"
             },
             {
-                latitude: 44.65,
-                longitude: -78.90,
-                title: 'Foo Place',
-                subtitle: '1234 Foo Drive'
+                key: 2,
+                coordinate: {
+                    latitude: 45.65,
+                    longitude: -38.90
+                },
+                pinColor: "#00FF00"
             },
             {
-                latitude: 46.65,
-                longitude: -78.90,
-                title: 'Foo Place',
-                subtitle: '1234 Foo Drive'
-            },
-            {
-                latitude: 47.65,
-                longitude: -78.90,
-                title: 'Foo Place',
-                subtitle: '1234 Foo Drive'
-            },
+                key: 3,
+                coordinate: {
+                    latitude: 42.677472,
+                    longitude: 23.290274
+                },
+                pinColor: "#00FF00"
+            }
         ]);
+        setVisibleMarkers(constantWorldMarkers.map(x=>x))
     },[]);
 
     useEffect(() => {
@@ -69,21 +72,37 @@ export function MapComponent() {
         };
 
         subscribe();
-        //return () => {setCurrentStepCount(-1)}
     }, [currentStepCount]);
+    
+    function openPin(m) {
+        console.log(currentlySelectedMarker)
+        setCurrentlySelectedMarker(m);
+        setVisibleMarkers([m]);
+        // get route
+    }
 
+    function closePin() {
+        console.log(currentlySelectedMarker)
+        setVisibleMarkers(constantWorldMarkers.map(x=>x));
+        setCurrentlySelectedMarker(null);
+    }
+
+    function isInsideMarkerArea(radius=25) {
+        return isPointWithinRadius(location.coords, currentlySelectedMarker.coordinate, radius)
+    }
+    console.log(location);
     return (
         <>
             <MapView
                 style={styles.map}
                 showsUserLocation={true}
-
-                annotations={markers}
+                provider={PROVIDER_GOOGLE}
             >
-                
-            </MapView>    
+                {visibleMarkers.map((m) => <Marker onPress={openPin.bind(this,m)} {...m} />)}
+            </MapView>
             <Text>{currentStepCount}</Text>
-            <Text>{location&&location.latitude}</Text>
+            <Button onPress={closePin} title="Close" />
+            {currentlySelectedMarker && <Text>{isInsideMarkerArea()?"da":"ne"}</Text>}
         </>
     );
 };
