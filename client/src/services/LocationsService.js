@@ -69,8 +69,7 @@ export default class LocationsService
         return res;
     }
 
-    getFullRoute = async (id) => {
-        const markerData = await this.get(id);
+    getRoute = async (markerData) => {
         const routeResponse = await fetch("https://routes.googleapis.com/directions/v2:computeRoutes",{
             method: 'POST',
             body: JSON.stringify({
@@ -100,16 +99,24 @@ export default class LocationsService
                 'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline'
             }
         });
+
         const routeData = await routeResponse.json();
         const returnData = {
-            polyline: {
-                coordinates: routeData["routes"][0]["polyline"]["geoJsonLinestring"]["coordinates"].map(x => ({
-                    latitude: x[1],
-                    longitude: x[0],
-                })),
-                strokeColor: "#00FF00",
-                strokeWidth: 6,
-            },
+            coordinates: routeData.routes[0].polyline.geoJsonLinestring.coordinates.map(x => ({
+                latitude: x[1],
+                longitude: x[0],
+            })),
+            strokeColor: "#00FF00",
+            strokeWidth: 6,
+        }
+        return returnData
+    }
+
+    getFullRoute = async (id) => {
+        const markerData = await this.get(id);
+        const routeData = await this.getRoute(markerData);
+        const returnData = {
+            polyline: routeData,
             markerStart: {
                 key: markerData.id,
                 coordinate: {

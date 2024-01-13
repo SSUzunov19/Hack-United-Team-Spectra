@@ -41,7 +41,7 @@ export function SearchScreen({ navigation }) {
                 />
                 <TouchableOpacity
                     style={styles.mapButton}
-                    onPress={() => navigation.navigate('Map')}
+                    onPress={() => navigation.navigate('OverviewMap')}
                 >
                     <Fontisto name="map" size={30} color={"#000000"} />
                 </TouchableOpacity>

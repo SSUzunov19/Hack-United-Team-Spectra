@@ -2,7 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { SearchScreen } from '../screens/SearchScreen';
-import { MapScreen } from '../screens/MapScreen';
+import { OverviewMapScreen } from '../screens/OverviewMapScreen';
+import { MainMapScreen } from '../screens/MainMapScreen';
+import { EventDetailsScreen } from '../screens/EventDetailsScreen';
 
 const SearchStack = createStackNavigator();
 
@@ -15,8 +17,18 @@ export const SearchStackNavigator = () => {
                 options={{ headerShown: false }}
             />
             <SearchStack.Screen
-                name="Map"
-                component={MapScreen}
+                name="OverviewMap"
+                component={OverviewMapScreen}
+                options={{ headerShown: false }}
+            />
+            <SearchStack.Screen
+                name="EventDetails"
+                component={EventDetailsScreen}
+                options={{ headerShown: false }}
+            />
+            <SearchStack.Screen
+                name="MainMap"
+                component={MainMapScreen}
                 options={{ headerShown: false }}
             />
         </SearchStack.Navigator>

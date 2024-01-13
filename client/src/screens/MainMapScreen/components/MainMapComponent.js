@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
 import {isPointWithinRadius} from 'geolib';
@@ -8,38 +8,30 @@ import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 
 import ServiceContext from '../../../services/ServiceContext';
 
-export function MapComponent() {
+export function MainMapComponent({ locationId }) {
     const [currentStepCount, setCurrentStepCount] = useState(0);
-    const [constantWorldMarkers, setConstantWorldMarkers] = useState([]);
     const [visibleMarkers, setVisibleMarkers] = useState(constantWorldMarkers.map(x=>x));
-    const [currentlySelectedMarker,setCurrentlySelectedMarker] = useState(null);
     const [location,setLocation] = useState(null);
     const [routePolyline,setRoutePolyline] = useState({coordinates:[], points: []});
+    const [isChallengeStarted, setIsChallengeStarted] = useState(false);
     const services = useContext(ServiceContext);
+
+    // Setup route and markers
+    useEffect(() => {
+        (async () => {
+            const routeData = await services.Locations.getFullRoute(m.key);
+            setRoutePolyline(routeData.polyline);
+            setVisibleMarkers([routeData.markerStart,routeData.markerEnd]);
+        })();
+    }, []);
 
     // Location data
     useEffect(() => {
         (async () => {
-          
-          let { statusForeground } = await Location.requestForegroundPermissionsAsync();
-          let { statusBackground } = await Location.requestBackgroundPermissionsAsync();
-          if (statusForeground !== 'granted' && statusBackground !== 'granted') {
-            return;
-          }
-    
-          let location = await Location.getCurrentPositionAsync({});
-          setLocation(location);
+            let loc = await Location.getCurrentPositionAsync({ "accuracy": Location.Accuracy.High });
+            setLocation(loc);
         })();
     }, [location]);
-
-    // Get all markers from database
-    useEffect(() => {
-        (async() => {
-            const startPins = await services.Locations.getAllStartPins();
-            setConstantWorldMarkers(startPins);
-            setVisibleMarkers(startPins);
-        })();
-    },[]);
 
     // Step counter
     useEffect(() => {
@@ -56,30 +48,26 @@ export function MapComponent() {
 
         subscribe();
     }, [currentStepCount]);
-    
-    function openPin(m) {
-        if (m.key.startsWith("2!") || currentlySelectedMarker!=null) return;
-
-        (async () => {
-            setCurrentlySelectedMarker(m);
-            const routeData = await services.Locations.getFullRoute(m.key);
-            setRoutePolyline(routeData.polyline);
-            setVisibleMarkers([routeData.markerStart,routeData.markerEnd]);
-        })();
-    }
-
-    function closePin() {
-        setVisibleMarkers(constantWorldMarkers);
-        setCurrentlySelectedMarker(null);
-        setRoutePolyline({coordinates:[], points: []});
-    }
 
     function isInsideMarkerArea(radius=25) {
-        if (location == null) return false;
+        if (location == null || location.coords.speed<0.5) return false;
 
         console.log("calc ",location.coords)
         return isPointWithinRadius(location.coords, currentlySelectedMarker.coordinate, radius)
     }
+
+    function startChallenge() {
+        const startDate = Date.now();
+        setIsChallengeStarted(true);
+        console.log("start")
+    }
+
+    function endChallenge() {
+        setIsChallengeStarted(false);
+        console.log("end")
+    }
+
+    console.log(locationId);
     
     return (
         <>
@@ -87,6 +75,8 @@ export function MapComponent() {
                 style={styles.map}
                 showsUserLocation={true}
                 provider={PROVIDER_GOOGLE}
+                
+
             >
                 {visibleMarkers.map((m) => <Marker onPress={openPin.bind(this,m)} {...m} />)}
                 <Polyline {...routePolyline} />
@@ -94,7 +84,7 @@ export function MapComponent() {
             </MapView>
             <Text>{currentStepCount}</Text>
             <Button onPress={closePin} title="Close" />
-            {currentlySelectedMarker && <Text>{isInsideMarkerArea()?"da":"ne"}</Text>}
+            {currentlySelectedMarker && isInsideMarkerArea() && <Button onPress={startChallenge} title="Start" />}
         </>
     );
 };
@@ -108,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MapComponent;
+export default MainMapComponent;

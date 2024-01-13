@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { MapComponent } from './components/MapComponent';
+import { View, StyleSheet } from 'react-native';
+import MainMapComponent from './components/MainMapComponent';
 
-export function MapScreen() {
+export function MainMapScreen({locationId}) {
   return (
     <View style={styles.container}>
-      <MapComponent />
+      <MainMapComponent locationId={locationId} />
     </View>
   );
 }
