@@ -4,6 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 export function HomeScreen() {
     return (
         <View style={styles.container}>
+            {/* <Image source={require('../../assets/level-image.png')} /> */}
             <Text style={styles.text}>Home Screen</Text>
         </View>
     );
