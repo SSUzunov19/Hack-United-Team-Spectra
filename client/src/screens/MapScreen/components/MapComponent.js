@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
 import {isPointWithinRadius} from 'geolib';
 import * as Location from 'expo-location';
-
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+
+import ServiceContext from '../../../services/ServiceContext';
 
 export function MapComponent() {
     const [currentStepCount, setCurrentStepCount] = useState(0);
@@ -13,50 +14,31 @@ export function MapComponent() {
     const [visibleMarkers, setVisibleMarkers] = useState(constantWorldMarkers.map(x=>x));
     const [currentlySelectedMarker,setCurrentlySelectedMarker] = useState(null);
     const [location,setLocation] = useState(null);
+    const services = useContext(ServiceContext);
 
+    // Location data
     useEffect(() => {
         (async () => {
           
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
+          let { statusForeground } = await Location.requestForegroundPermissionsAsync();
+          let { statusBackground } = await Location.requestBackgroundPermissionsAsync();
+          if (statusForeground !== 'granted' && statusBackground !== 'granted') {
             return;
           }
     
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
         })();
-      }, []);
+    }, []);
 
     // Get all markers from database
     useEffect(() => {
-        // fetch
-        setConstantWorldMarkers([
-            {
-                key: 1,
-                coordinate: {
-                    latitude: 45.65,
-                    longitude: -28.90
-                },
-                pinColor: "#00FF00"
-            },
-            {
-                key: 2,
-                coordinate: {
-                    latitude: 45.65,
-                    longitude: -38.90
-                },
-                pinColor: "#00FF00"
-            },
-            {
-                key: 3,
-                coordinate: {
-                    latitude: 42.677472,
-                    longitude: 23.290274
-                },
-                pinColor: "#00FF00"
-            }
-        ]);
-        setVisibleMarkers(constantWorldMarkers.map(x=>x))
+        (async() => {
+            const startPins = await services.Locations.getAllStartPins();
+            console.log(startPins);
+            setConstantWorldMarkers(startPins);
+            setVisibleMarkers(startPins);
+        })();
     },[]);
 
     useEffect(() => {
@@ -88,9 +70,12 @@ export function MapComponent() {
     }
 
     function isInsideMarkerArea(radius=25) {
+        if (location == null) return false;
+
+        console.log("calc ",location.coords)
         return isPointWithinRadius(location.coords, currentlySelectedMarker.coordinate, radius)
     }
-    console.log(location);
+    
     return (
         <>
             <MapView

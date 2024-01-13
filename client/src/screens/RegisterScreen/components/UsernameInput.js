@@ -5,7 +5,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 const EmailInput = ({ value, onChangeText }) => (
   <View style={styles.inputContainer}>
     <TextInput
-      placeholder="Потребителско име"
+      placeholder="Username"
       value={value}
       onChangeText={onChangeText}
       style={styles.input}

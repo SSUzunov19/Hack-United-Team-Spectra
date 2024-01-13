@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 
 import Navigation from './src/navigation';
+import ServiceContext, { services } from './src/services/ServiceContext';
 
 SplashScreen.preventAutoHideAsync()
   .then(result => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
@@ -34,8 +35,10 @@ export default function App() {
 
   return (
     <>
-      <Navigation />
-      <StatusBar style="auto" />
+      <ServiceContext.Provider value={services}>
+        <Navigation />
+        <StatusBar style="auto" />
+      </ServiceContext.Provider>
     </>
   );
 }
