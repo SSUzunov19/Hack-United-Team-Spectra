@@ -26,6 +26,7 @@ jobs:
           cd server
           npm i
           npm install typescript
+          npx prisma generate
           npx tsc
           cp -r node_modules ./dist
 
