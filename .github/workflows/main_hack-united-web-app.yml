@@ -19,11 +19,12 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
 
       - name: npm install, build, and test
         run: |
           cd server
+          npm install -g @nestjs/cli
           npm i
           npm install typescript
           npx prisma generate
