@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 import ServiceContext from '../../../services/ServiceContext';
@@ -17,18 +17,20 @@ export function OverviewMapComponent({ navigation }) {
     },[]);
     
     function clickMarker(m) {
-        navigation.navigate('EventDetails', {navigation: navigation, locationId: m.key});
+        navigation.navigate('EventDetails', {locationId: m.key});
     }
     
     return (
         <>
-            <MapView
+            <Text>Loading... Please Wait</Text>
+            {visibleMarkers && <MapView
                 style={styles.map}
                 showsUserLocation={true}
                 provider={PROVIDER_GOOGLE}
             >
                 {visibleMarkers.map((m) => <Marker onPress={clickMarker.bind(this,m)} {...m} />)}
-            </MapView>
+                {/* <Marker coordinate={{latitude:50,longitude:50}} icon={} /> */}
+            </MapView>}
         </>
     );
 };

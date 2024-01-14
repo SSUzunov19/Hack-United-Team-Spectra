@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MainMapComponent from './components/MainMapComponent';
 
-export function MainMapScreen({locationId}) {
+export function MainMapScreen({route}) {
+  const { challenge } = route.params;
   return (
     <View style={styles.container}>
-      <MainMapComponent locationId={locationId} />
+      <MainMapComponent challenge={challenge} />
     </View>
   );
 }
