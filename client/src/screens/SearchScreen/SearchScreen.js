@@ -65,7 +65,7 @@ export function SearchScreen({ navigation }) {
             <FlatList
                 horizontal
                 data={challengeData}
-                renderItem={renderChallengeCard}
+                renderItem={({ item }) => renderChallengeCard({ item, navigation })}
                 keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.featuredContainer}
@@ -74,8 +74,11 @@ export function SearchScreen({ navigation }) {
     );
 }
 
-const renderChallengeCard = ({ item }) => (
-    <View style={styles.card}>
+const renderChallengeCard = ({ item, navigation }) => (
+    <TouchableOpacity
+        onPress={() => navigation.navigate('Challenge', { challengeId: item.id })}
+        style={styles.card}
+    >
         <Image source={item.imageUrl} style={styles.cardImage} />
         <View style={styles.participantCounter}>
             <MaterialCommunityIcons name="run" size={24} color="#000" />
@@ -91,7 +94,7 @@ const renderChallengeCard = ({ item }) => (
             </View>
             <Text style={styles.challengePrice}>{item.price}</Text>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

@@ -17,7 +17,8 @@ export default function App() {
     async function loadFonts() {
       try {
         await Font.loadAsync({
-          // Fonts can be loaded here
+          'NeueMontreal-Regular': require('./src/assets/fonts/NeueMontreal-Regular.ttf'),
+          'NeueMontreal-Medium': require('./src/assets/fonts/NeueMontreal-Medium.ttf'),
         });
         setFontsLoaded(true);
       } catch (e) {

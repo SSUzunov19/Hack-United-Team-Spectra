@@ -5,7 +5,7 @@ const Title = () => <Text style={styles.title}> Spectra </Text>;
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Roboto',
+    fontFamily: 'NeueMontreal-Medium',
     fontSize: 64,
     alignSelf: 'center',
     marginBottom: 20,
