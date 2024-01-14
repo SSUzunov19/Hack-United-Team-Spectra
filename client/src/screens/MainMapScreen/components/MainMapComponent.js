@@ -168,7 +168,7 @@ export function MainMapComponent({ challenge }) {
                 <Text style={styles.btntext}>Start Challenge</Text>
             </TouchableOpacity >
             }
-            <Button onPress={endChallenge} title="end"/>
+            {/* <Button onPress={endChallenge} title="end"/> */}
         </>
     );
 };
