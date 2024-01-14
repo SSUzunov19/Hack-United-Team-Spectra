@@ -4,8 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 export function BalanceSection() {
     return (
         <View style={styles.container}>
-            {/* Balance Overview Section */}
-            <Text style={styles.balanceAmount}>10,00€</Text>
+            <Text style={styles.balanceAmount}>23,00€</Text>
             <Text style={styles.balanceLabel}>available balance</Text>
 
             <View style={styles.financialInfo}>
@@ -15,11 +14,11 @@ export function BalanceSection() {
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoTitle}>Withdrawable</Text>
-                    <Text style={styles.infoValue}>0.00€</Text>
+                    <Text style={styles.infoValue}>18.00€</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoTitle}>Total won</Text>
-                    <Text style={styles.infoValue}>0.00€</Text>
+                    <Text style={styles.infoValue}>13.00€</Text>
                 </View>
             </View>
 

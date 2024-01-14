@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { HomeStackNavigator } from './HomeStackNavigator';
 import { SearchStackNavigator } from './SearchStackNavigator';
 import { StatisticsStackNavigator } from './StatisticsStackNavigator';
-import { SettingsStackNavigator } from './SettingsStackNavigator';
+import { ProfileStackNavigator } from './ProfileStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,8 +20,8 @@ function TabsNavigator() {
       iconName = focused ? 'search' : 'search-outline';
     } else if (route.name === 'StatisticsStack') {
       iconName = focused ? 'stats-chart' : 'stats-chart-outline';
-    } else if (route.name === 'SettingsStack') {
-      iconName = focused ? 'settings' : 'settings-outline';
+    } else if (route.name === 'ProfileStack') {
+      iconName = focused ? 'person' : 'person-outline';
     }
 
     return (
@@ -63,7 +63,7 @@ function TabsNavigator() {
       />
       <Tab.Screen name="SearchStack" component={SearchStackNavigator} />
       <Tab.Screen name="StatisticsStack" component={StatisticsStackNavigator} />
-      <Tab.Screen name="SettingsStack" component={SettingsStackNavigator} />
+      <Tab.Screen name="ProfileStack" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 }

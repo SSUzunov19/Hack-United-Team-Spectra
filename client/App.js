@@ -6,10 +6,6 @@ import { StatusBar } from 'expo-status-bar';
 import Navigation from './src/navigation';
 import ServiceContext, { services } from './src/services/ServiceContext';
 
-SplashScreen.preventAutoHideAsync()
-  .then(result => console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`))
-  .catch(console.warn);
-
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
