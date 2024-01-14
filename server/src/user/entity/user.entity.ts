@@ -6,4 +6,6 @@ export class User {
     password: string;
     aboutMe?: string;
     imgUrl?: string;
+    instagramLink?: string;
+    facebookLink?: string;
 }

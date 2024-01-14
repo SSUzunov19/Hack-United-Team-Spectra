@@ -15,4 +15,16 @@ export class CreateUserDto {
 
     @ApiProperty({example: 'password', description: 'Password of the user'})
     readonly password: string;
+
+    @ApiProperty({example: 'About me', description: 'About me of the user'})
+    readonly aboutMe?: string;
+
+    @ApiProperty({example: 'https://www.google.com/image.png', description: 'The image url of the user'})
+    readonly imgUrl?: string;
+
+    @ApiProperty({ example: 'https://www.instagram.com/username', description: 'The instagram link of the user' })
+    readonly instagramLink?: string;
+
+    @ApiProperty({ example: 'https://www.twitter.com/username', description: 'The twitter link of the user' })
+    readonly facebookLink?: string;
 }

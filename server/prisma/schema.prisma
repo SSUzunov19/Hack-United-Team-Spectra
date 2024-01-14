@@ -19,6 +19,8 @@ model Users {
   password  String
   aboutMe String?
   imgUrl String?
+  instagramLink String?
+  facebookLink String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -76,8 +78,6 @@ model UserChallenges{
   challengeId String
   challenge Challenges @relation(fields: [challengeId], references: [id])
   status String
-  instagramLink String?
-  twitterLink String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

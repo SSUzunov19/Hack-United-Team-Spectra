@@ -9,10 +9,4 @@ export class CreateUserChallengeDto {
 
     @ApiProperty({ example: 'Completed', description: 'The status of the challenge' })
     readonly status: string;
-
-    @ApiProperty({ example: 'https://www.instagram.com/username', description: 'The instagram link of the user' })
-    readonly instagramLink?: string;
-
-    @ApiProperty({ example: 'https://www.twitter.com/username', description: 'The twitter link of the user' })
-    readonly twitterLink?: string;
 }
