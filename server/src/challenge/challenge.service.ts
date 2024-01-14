@@ -17,6 +17,12 @@ export class ChallengeService {
     });
   }
 
+  async findChallengeByLocationId(locationId: string): Promise<Challenges> {
+    return await this.prisma.challenges.findFirst({
+      where: {locationId}
+    });
+  }
+
   async fomdChallengeByName(name: string): Promise<Challenges> {
     return await this.prisma.challenges.findFirst({
       where: {name}

@@ -29,6 +29,14 @@ export class ChallengeController {
     return await this.challengeService.findChallengeById(id);
   }
 
+  @Get('location/:locationId')
+  @ApiOperation({ summary: 'Get challenge by location id' })
+  @ApiResponse({ status: 500, description: 'Bad request.'})
+  @ApiOkResponse({ description: 'Got challenge by location id', type: Challenge })
+  async findChallengeByLocationId(@Param('locationId') locationId: string): Promise<Challenges> {
+    return await this.challengeService.findChallengeByLocationId(locationId);
+  }
+
   @Get('name/:name')
   @ApiOperation({ summary: 'Get challenge by name' })
   @ApiResponse({ status: 500, description: 'Bad request.'})
