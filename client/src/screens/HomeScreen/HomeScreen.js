@@ -11,11 +11,11 @@ export function HomeScreen({ navigation }) {
             <Text style={styles.subtitle}>No Active Challenges</Text>
 
             <TouchableOpacity
-                onPress={() => navigation.navigate('CreateChallenge')}
+                onPress={() => navigation.navigate('CreateChallengeScreen')}
                 style={styles.challengeBox}>
                 <AntDesign name="plus" size={24} color="black" style={styles.icon} />
                 <View style={styles.challengeTextContainer}>
-                    <Text style={styles.challengeTitle}>No Active Challenges</Text>
+                    <Text style={styles.challengeTitle}>Host a challenge</Text>
                     <Text style={styles.challengeDescription}>Inspire Friends to Get Fit</Text>
                 </View>
             </TouchableOpacity>
