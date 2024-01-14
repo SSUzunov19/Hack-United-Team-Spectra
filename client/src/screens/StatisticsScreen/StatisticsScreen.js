@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
   },
   centerText: {
     alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   topText: {
     fontSize: 32,
@@ -66,6 +70,8 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 18,
     fontWeight: '500',
+    marginLeft: 10,
+    marginTop: 5,
   },
   headingRight: {
     position: 'absolute',
