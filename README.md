@@ -23,7 +23,7 @@
 <details open>
 <summary>Tech Stack</summary>
 <br>
-<img src ="https://cdn.discordapp.com/attachments/1192011345835601930/1196109441456680970/Diagrama.png?ex=65b66eb9&is=65a3f9b9&hm=a8bb49784e67b9860d777f41ed17667140915282069484363764d7d941819b8e&">
+<img src ="https://cdn.discordapp.com/attachments/709644834423439360/1196112631795286108/Diagrama_1.png?ex=65b671b2&is=65a3fcb2&hm=549f5be9824183a994bbe59d46f11f485d3acbfb8e45d41b66db41a26ab5113f&">
 </details>
 
 ## 🔧 Installation
