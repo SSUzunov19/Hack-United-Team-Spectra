@@ -17,7 +17,7 @@ export function OverviewMapComponent({ navigation }) {
     },[]);
     
     function clickMarker(m) {
-        navigation.navigate('EventDetails', {locationId: m.key});
+        navigation.navigate('Challenge', {locationId: m.key});
     }
     
     return (

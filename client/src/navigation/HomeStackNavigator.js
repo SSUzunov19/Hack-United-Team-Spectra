@@ -14,11 +14,11 @@ export const HomeStackNavigator = () => {
                 component={HomeScreen}
                 options={{ headerShown: false }}
             />
-            <HomeStack.Screen
+            {/* <HomeStack.Screen
                 name="CreateChallenge"
                 component={CreateChallengeScreen}
                 options={{ headerShown: false }}
-            />
+            /> */}
         </HomeStack.Navigator>
     );
 };

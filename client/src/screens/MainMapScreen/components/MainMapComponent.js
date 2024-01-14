@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Text, Image } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
 import {isPointWithinRadius} from 'geolib';
@@ -51,6 +51,7 @@ let loc = null;
 
 export function MainMapComponent({ challenge }) {
     const [currentStepCount, setCurrentStepCount] = useState(0);
+    const [isChallengeEnded, setIsChallengeEnded] = useState(false);
     const [visibleMarkers, setVisibleMarkers] = useState([]);
     const [routePolyline,setRoutePolyline] = useState({coordinates:[], points: []});
     const [isChallengeStarted, setIsChallengeStarted] = useState(false);
@@ -72,6 +73,7 @@ export function MainMapComponent({ challenge }) {
     // Get location every 5 seconds
     useEffect(() => {
         const interval = setInterval(() => {
+            // if(isChallengeEnded) return;
             location.current=loc;
             console.log(location.current);
         }, 5000);
@@ -80,39 +82,43 @@ export function MainMapComponent({ challenge }) {
 
     // Timer
     useEffect(() => {
-        if (!isChallengeStarted) return;
+        
         const interval = setInterval(() => {
-            setTimer(p=>p+=1);
+            if (isChallengeStarted&& !isChallengeEnded)
+                setTimer(p=>p+=1);
         },1000);
         return () => clearInterval(interval);
     },[isChallengeStarted]);
 
     // Step counter
     useEffect(() => {
-        if (!isChallengeStarted) return;
+        //if (!isChallengeStarted) return;
+        if(isChallengeStarted && !isChallengeEnded) {
+            (async () => {
+                const isAvailable = await Pedometer.isAvailableAsync();
+            
+                if (isAvailable) {
+                    return Pedometer.watchStepCount(result => {
+                        setCurrentStepCount(result.steps);
+                    });
+                }
+                return () => {setCurrentStepCount(-1)}
+            })();
+        }
 
-        (async () => {
-            const isAvailable = await Pedometer.isAvailableAsync();
         
-            if (isAvailable) {
-                return Pedometer.watchStepCount(result => {
-                    setCurrentStepCount(result.steps);
-                });
-            }
-            return () => {setCurrentStepCount(-1)}
-        })();
-    }, [currentStepCount,isChallengeStarted]);
+    }, [currentStepCount,isChallengeStarted,isChallengeEnded]);
 
     // Detect if challenge is completed
     useEffect(() => {
-        if (!isChallengeStarted) return;
+        if (!isChallengeStarted && !isChallengeEnded) return;
 
         if (isInsideMarkerArea(visibleMarkers[1])) {
             endChallenge();
         }
-    },[location])
+    },[location.current])
 
-    function isInsideMarkerArea(marker, radius=25) {
+    function isInsideMarkerArea(marker, radius=35) {
         if (location.current == null || !marker) return false;
         return isPointWithinRadius(location.current.coords, marker.coordinate, radius)
     }
@@ -125,9 +131,9 @@ export function MainMapComponent({ challenge }) {
 
     function endChallenge() {
         endTime.current = Date.now();
-        setIsChallengeStarted(false);
+        setIsChallengeEnded(true);
         // services to challenge...
-        console.log("end", startTime, endTime, currentStepCount);
+        console.log("end", timer, currentStepCount);
     }
 
     return (
@@ -151,9 +157,18 @@ export function MainMapComponent({ challenge }) {
                 <Polyline {...routePolyline} />
 
             </MapView>}
-            {isChallengeStarted && <Text>Step Count: {currentStepCount}</Text>}
-            {isChallengeStarted && <Text>Time: {timer}</Text>}
-            {visibleMarkers && isInsideMarkerArea(visibleMarkers[0]) && !isChallengeStarted && <Button onPress={startChallenge} title="Start" />}
+            {isChallengeStarted && 
+            <TouchableOpacity style={styles.bg}>
+                {isChallengeEnded&&<Text style={styles.btntext}>Challenge Completed!</Text>}
+                <Text style={styles.btntext}>Step Count: {currentStepCount}</Text>
+                <Text style={styles.btntext}>Time: {timer} s</Text>
+            </TouchableOpacity>}
+            {visibleMarkers && isInsideMarkerArea(visibleMarkers[0]) && !isChallengeStarted && 
+            <TouchableOpacity onPress={startChallenge} style={styles.btn}>
+                <Text style={styles.btntext}>Start Challenge</Text>
+            </TouchableOpacity >
+            }
+            <Button onPress={endChallenge} title="end"/>
         </>
     );
 };
@@ -165,6 +180,29 @@ const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
   },
+  btn: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 25,
+    width: '80%',
+    alignItems: 'center',
+    alignSelf: 'bottom',
+    marginBottom: 20,
+  },
+  btntext: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+  },
+  bg: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 25,
+    width: '80%',
+    alignItems: 'center',
+    alignSelf: 'bottom',
+    marginBottom: 20,
+  }
 });
 
 export default MainMapComponent;

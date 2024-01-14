@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState,useContext,useRef } from 'react';
 import {
     View,
     Text,
@@ -9,11 +9,27 @@ import {
     ScrollView
 } from 'react-native';
 
+
+import ServiceContext from '../../services/ServiceContext';
 import { InfoSection } from './components/InfoSection';
 import { BottomSection } from './components/BottomSection';
 
 export function ChallengeScreen({ route, navigation }) {
-    const { challengeId } = route.params;
+    const { challengeId,locationId } = route.params;
+    const [challenge,setChallenge] = useState(null);
+    const services = useContext(ServiceContext);
+
+    useEffect(() => {
+        console.log(locationId);
+        (async ()=>{
+            if(locationId) {
+                
+                setChallenge(await services.Challenges.getChallengeByLocationId(locationId));
+            } else {
+                setChallenge(await services.Challenges.getChallengeById(challengeId));
+            }
+        })();
+    },[]);
 
     return (
         <ScrollView style={styles.container}>
@@ -37,7 +53,15 @@ export function ChallengeScreen({ route, navigation }) {
 
             <InfoSection />
             
-            <BottomSection />
+            <BottomSection/>
+            {challenge?
+            <TouchableOpacity style={styles.inviteButton} onPress={navigation.navigate('MainMap',{challenge:challenge})}>
+                <Text style={styles.buttonText}>Join Challenge</Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity style={styles.inviteButton}>
+                <Text style={styles.buttonText}>Join Challenge</Text>
+            </TouchableOpacity>}
 
             <TouchableOpacity style={styles.inviteButton}>
                 <Text style={styles.inviteButtonText}>Invite Friends</Text>

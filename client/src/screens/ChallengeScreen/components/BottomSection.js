@@ -16,9 +16,7 @@ export function BottomSection() {
                 <Text style={styles.hosteeText}>Spectra</Text>
             </View>
         </View>
-        <TouchableOpacity style={styles.inviteButton}>
-            <Text style={styles.buttonText}>Join Challenge</Text>
-        </TouchableOpacity>
+        
     </View>
     );
 }
