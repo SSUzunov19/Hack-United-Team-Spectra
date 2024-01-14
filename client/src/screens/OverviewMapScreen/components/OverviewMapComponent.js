@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Image } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 import ServiceContext from '../../../services/ServiceContext';
@@ -28,8 +28,11 @@ export function OverviewMapComponent({ navigation }) {
                 showsUserLocation={true}
                 provider={PROVIDER_GOOGLE}
             >
-                {visibleMarkers.map((m) => <Marker onPress={clickMarker.bind(this,m)} {...m} />)}
-                {/* <Marker coordinate={{latitude:50,longitude:50}} icon={} /> */}
+                {visibleMarkers.map((m) => 
+                    <Marker onPress={clickMarker.bind(this,m)} {...m}>
+                        <Image source={require("../../../assets/images/pin.png")} style={{width: 25, height: 25}} />
+                    </Marker>
+                )}
             </MapView>}
         </>
     );

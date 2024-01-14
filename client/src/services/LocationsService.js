@@ -123,7 +123,11 @@ export default class LocationsService
                     latitude: markerData.latitudeStart,
                     longitude: markerData.longitudeStart,
                 },
-                pinColor: "#00FF00",
+                image:{
+                    uri: require('../assets/images/start.png'),
+                    width: 25,
+                    height: 25,
+                },
             },
             markerEnd: {
                 key: "2!"+markerData.id,
@@ -131,7 +135,11 @@ export default class LocationsService
                     latitude: markerData.latitudeEnd,
                     longitude: markerData.longitudeEnd,
                 },
-                pinColor: "#FF0000",
+                image:{
+                    uri: require('../assets/images/finish.png'),
+                    width: 25,
+                    height: 25,
+                },
             },
         }
         return returnData;

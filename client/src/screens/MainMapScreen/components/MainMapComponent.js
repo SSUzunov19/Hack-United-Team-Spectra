@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Button, Text, Image } from 'react-native-elements';
 import { Pedometer } from 'expo-sensors';
 import {isPointWithinRadius} from 'geolib';
 import * as Location from 'expo-location';
@@ -143,7 +143,11 @@ export function MainMapComponent({ challenge }) {
                     longitudeDelta: 0.0421,
                 }}
             >
-                {visibleMarkers.map((m) => <Marker {...m} />)}
+                {visibleMarkers.map((m) => 
+                    <Marker coordinate={m.coordinate} key={m.key} >
+                        <Image source={m.image.uri} style={{width: 25, height: 25}} />
+                    </Marker>
+                )}
                 <Polyline {...routePolyline} />
 
             </MapView>}

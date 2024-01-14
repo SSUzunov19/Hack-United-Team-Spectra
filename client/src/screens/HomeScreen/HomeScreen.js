@@ -11,7 +11,7 @@ export function HomeScreen({ navigation }) {
             <Text style={styles.subtitle}>No Active Challenges</Text>
 
             <TouchableOpacity
-                onPress={() => navigation.navigate('CreateChallengeScreen')}
+                onPress={() => navigation.navigate('CreateChallenge')}
                 style={styles.challengeBox}>
                 <AntDesign name="plus" size={24} color="black" style={styles.icon} />
                 <View style={styles.challengeTextContainer}>

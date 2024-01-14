@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import DatePicker from 'react-native-datepicker';
+import { RNDateTimePicker  } from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 
 export function CreateChallengeScreen() {
@@ -53,6 +53,14 @@ export function CreateChallengeScreen() {
         // Event creation logic here
     };
 
+    const setDate = (event, date) => {
+        const {
+          type,
+          nativeEvent: {timestamp, utcOffset},
+        } = event;
+        console.log(timestamp, utcOffset, date, type);
+      };
+
     return (
         <ScrollView style={styles.container}>
             <Text style={styles.title}>Create Event</Text>
@@ -97,7 +105,7 @@ export function CreateChallengeScreen() {
 
             <Text style={styles.label}>Schedule</Text>
             <View style={styles.dateRow}>
-                <DatePicker
+                {/* <DatePicker
                     style={styles.datePicker}
                     date={startDate}
                     mode="date"
@@ -106,9 +114,15 @@ export function CreateChallengeScreen() {
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}
+                /> */}
+
+                <RNDateTimePicker 
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    
                 />
 
-                <DatePicker
+                {/* <DatePicker
                     style={styles.datePicker}
                     date={endDate}
                     mode="date"
@@ -117,7 +131,7 @@ export function CreateChallengeScreen() {
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}
-                />
+                /> */}
             </View>
 
 

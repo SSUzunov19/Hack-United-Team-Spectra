@@ -22,14 +22,17 @@
     "expo-sensors": "~12.3.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "expo-task-manager": "~11.3.0",
     "geolib": "^3.3.4",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-date-picker": "^4.3.5",
     "react-native-dotenv": "^3.4.9",
     "react-native-elements": "^3.4.3",
     "react-native-maps": "1.7.1",
     "react-native-vector-icons": "^10.0.3",
-    "expo-task-manager": "~11.3.0"
+    "@react-native-community/datetimepicker": "7.2.0",
+    "expo-image-picker": "~14.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
