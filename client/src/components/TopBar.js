@@ -1,35 +1,47 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import * as Blur from '@react-native-community/blur';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Fontisto } from '@expo/vector-icons';
 
-export function TopBar() {
+export function TopBar({ additionalMargin }) {
+    // Original styles
+    const originalStyles = styles.header;
+
+    // Create a new style object with additional margin
+    const modifiedStyles = { ...originalStyles, marginBottom: additionalMargin };
+
     return (
-        <View style={styles.topBar}>
-            <View style={styles.gradient}>
-                {/* <View style={styles.container}>
-
-                </View> */}
-            </View>
+        <View style={modifiedStyles}>
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Search by place or name..."
+            />
+            <TouchableOpacity
+                style={styles.mapButton}
+                onPress={() => navigation.navigate('OverviewMap')}
+            >
+                <Fontisto name="map" size={30} color={"#000000"} />
+            </TouchableOpacity>
         </View>
     );
-
 }
 
 const styles = StyleSheet.create({
-    topBar: {
-        height: '15%',
-        width: '100%',
-        marginTop: '15%',
-        // backgroundColor: '#0000ff',
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
-    gradient: {
-        height: 75,
-        width: 75,
-        borderRadius: 100,
-        marginLeft: 25,
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        backgroundColor: '#00ff00',
-        
+    searchInput: {
+        flex: 1,
+        marginHorizontal: 16,
+        paddingHorizontal: 32,
+        height: 60,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 30,
+        fontSize: 16,
     },
-})
+    mapButton: {
+        padding: 14,
+    },
+});

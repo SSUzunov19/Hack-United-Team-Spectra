@@ -31,7 +31,9 @@ const BottomBox = ({ title, contentTop, contentBottom }) => (
 export function StatisticsScreen() {
   return (
     <View style={styles.container}>
-      <TopBar />
+      
+      <TopBar additionalMargin={20} />
+
       <View style={styles.topRow}>
         <View style={styles.leftColumn}>
           <Box title="KM Walked" contentTop="1,200 KM" contentBottom="keep it up!" />
@@ -51,6 +53,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  pushBack: {
+    marginTop: '15%',
   },
   centerText: {
     alignItems: 'center',

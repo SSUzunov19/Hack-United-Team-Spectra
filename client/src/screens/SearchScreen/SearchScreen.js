@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
-import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { TopBar } from '../../components/TopBar';
 
 const challengeData = [
     {
@@ -25,27 +27,17 @@ const challengeData = [
 
 export function SearchScreen({ navigation }) {
     const typesOfChallenges = [
+        "Beginner Challenges",
         "Easy Challenges",
-        "Weekend Challenges",
         "Medium Challenges",
-        "Hard Challenges",
-        "Eliminate Challenges"
+        "Advanced Challenges",
+        "Hard Challenges"
     ];
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search by place or name..."
-                />
-                <TouchableOpacity
-                    style={styles.mapButton}
-                    onPress={() => navigation.navigate('OverviewMap')}
-                >
-                    <Fontisto name="map" size={30} color={"#000000"} />
-                </TouchableOpacity>
-            </View>
+            
+            <TopBar />
 
             <Text style={styles.subHeader}>Types of challenges</Text>
             <ScrollView
@@ -103,24 +95,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingTop: 50,
         paddingHorizontal: 16,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    searchInput: {
-        flex: 1,
-        marginHorizontal: 16,
-        paddingHorizontal: 32,
-        height: 60,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 30,
-        fontSize: 16,
-    },
-    mapButton: {
-        padding: 14,
     },
     typesContainer: {
         marginBottom: 16,
