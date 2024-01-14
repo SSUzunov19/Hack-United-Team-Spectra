@@ -8,8 +8,8 @@ const Navigation = () => {
 
     return (
         <NavigationContainer>
-            {/* {!isAuthenticated ? <AuthNavigator /> : <AppNavigator />} */}
-            <AppNavigator />    
+            {!isAuthenticated ? <AuthNavigator /> : <AppNavigator />}
+            {/* <AppNavigator />     */}
         </NavigationContainer>
     );
 };

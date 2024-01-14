@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import {TopBar} from '../../components/TopBar';
 
 const Box = ({ title, contentTop, contentBottom }) => (
     <View style={styles.box}>
@@ -31,7 +32,8 @@ const Box = ({ title, contentTop, contentBottom }) => (
 export function StatisticsScreen() {
     return (
         <View style={styles.container}>
-        <View style={styles.placeholder}></View>
+        {/* <View style={styles.placeholder}></View> */}
+        <TopBar />
         <View style={styles.topRow}>
           <View style={styles.leftColumn}>
             <Box title="KM Walked"     contentTop="1,200 KM" contentBottom="keep it up!"/>
@@ -63,17 +65,15 @@ export function StatisticsScreen() {
       },
       topText: {
         color: '#000000',
-        fontSize: '32px',
+        fontSize: 32,
         fontStyle: 'normal',
         fontWeight: 500,
-        lineHeight: 'normal',
       },
       bottomText: {
         color: '#8d8d8d',
-        fontSize: '20px',
+        fontSize: 20,
         fontStyle: 'normal',
         fontWeight: 400,
-        lineHeight: 'normal',
       },
       placeholder: {
         height: '15%',
@@ -85,20 +85,18 @@ export function StatisticsScreen() {
         position: 'absolute',
         marginLeft: '5%',
         marginTop: '5%',
-        fontSize: '18px',
+        fontSize: 18,
         fontStyle: 'normal',
         fontWeight: 500,
-        lineHeight: 'normal',
       },
       headingRight: {
         position: 'absolute',
         right: 0,
         marginRight: '5%',
         marginTop: '5%',
-        fontSize: '16px',
+        fontSize: 16,
         fontStyle: 'normal',
         fontWeight: 500,
-        lineHeight: 'normal',
       },
       topRow: {
         flexDirection: 'row',
