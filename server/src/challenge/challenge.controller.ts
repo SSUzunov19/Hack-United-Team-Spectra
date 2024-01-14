@@ -21,6 +21,14 @@ export class ChallengeController {
     return await this.challengeService.findAllChallenges();
   }
 
+  @Get('category/:category')
+  @ApiOperation({ summary: 'Get all challenges by category' })
+  @ApiResponse({ status: 500, description: 'Bad request.'})
+  @ApiOkResponse({ description: 'Got all challenges by category', type: Challenge })
+  async GetAllChallengesByCategory(@Param('category') category: string): Promise<Challenges[]> {
+    return await this.challengeService.findAllChallengesByCategory(category);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get challenge by id' })
   @ApiResponse({ status: 500, description: 'Bad request.'})

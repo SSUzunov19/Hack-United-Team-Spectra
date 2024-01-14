@@ -11,6 +11,12 @@ export class ChallengeService {
     return await this.prisma.challenges.findMany();
   }
 
+  async findAllChallengesByCategory(category: string): Promise<Challenges[]> {
+    return await this.prisma.challenges.findMany({
+      where: {category}
+    });
+  }
+
   async findChallengeById(id: string): Promise<Challenges> {
     return await this.prisma.challenges.findUnique({
       where: {id}

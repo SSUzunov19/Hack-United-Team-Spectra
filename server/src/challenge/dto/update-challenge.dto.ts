@@ -9,6 +9,7 @@ export class UpdateChallengeDto extends PartialType(CreateChallengeDto) {
     totalPrize?: number;
     imrUrl?: string;
     featured?: boolean;
+    caretogy?: string;
     locationId?: string;
     peopleLimit?: number;
     isChallengeCompleted?: boolean;

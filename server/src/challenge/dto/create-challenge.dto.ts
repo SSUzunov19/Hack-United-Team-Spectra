@@ -22,6 +22,9 @@ export class CreateChallengeDto {
     @ApiProperty({example: 'false', description: 'The featured of the challenge'})
     readonly featured?: boolean;
 
+    @ApiProperty({example: 'easy', description: 'The category'})
+    readonly caretogy: string;
+
     @ApiProperty({example: '1', description: 'The id of the location'})
     readonly locationId: string;
 

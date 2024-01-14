@@ -6,6 +6,7 @@ export class Challenge {
     totalPrize: number;
     imrUrl?: string;
     featured?: boolean;
+    category?: string;
     locationId: string;
     peopleLimit: number;
     isChallengeCompleted: boolean;

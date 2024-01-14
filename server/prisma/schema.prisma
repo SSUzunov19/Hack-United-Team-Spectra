@@ -59,6 +59,7 @@ model Challenges{
   totalPrize Float 
   imgUrl String?
   featured Boolean?
+  category String?
   locationId String
   location Locations @relation(fields: [locationId], references: [id])
 
