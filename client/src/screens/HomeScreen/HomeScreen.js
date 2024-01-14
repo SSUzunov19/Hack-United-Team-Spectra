@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Hello!</Text>
@@ -10,7 +10,9 @@ export function HomeScreen() {
 
             <Text style={styles.subtitle}>No Active Challenges</Text>
 
-            <TouchableOpacity style={styles.challengeBox}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('CreateChallenge')}
+                style={styles.challengeBox}>
                 <AntDesign name="plus" size={24} color="black" style={styles.icon} />
                 <View style={styles.challengeTextContainer}>
                     <Text style={styles.challengeTitle}>No Active Challenges</Text>
@@ -18,7 +20,9 @@ export function HomeScreen() {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.challengeBox}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Search')}
+                style={styles.challengeBox}>
                 <AntDesign name="plus" size={24} color="black" style={styles.icon} />
                 <View style={styles.challengeTextContainer}>
                     <Text style={styles.challengeTitle}>Join a challenge</Text>
@@ -35,7 +39,7 @@ export function HomeScreen() {
                     <Text style={styles.helpButtonText}>Ask Spectra</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     );
 }
 
