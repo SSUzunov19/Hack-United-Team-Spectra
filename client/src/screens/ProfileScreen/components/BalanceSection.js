@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         marginBottom: 32,
     },
     balanceAmount: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 48,
         fontWeight: 'bold',
         color: 'black',
@@ -52,20 +53,24 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     financialInfo: {
+        fontFamily: 'NeueMontreal-Medium',
         alignSelf: 'center',
         marginBottom: 24,
     },
     infoRow: {
+        fontFamily: 'NeueMontreal-Medium',
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: 280,
         marginBottom: 8,
     },
     infoTitle: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 18,
         color: 'grey',
     },
     infoValue: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 18,
         fontWeight: 'bold',
         color: 'black',
@@ -84,11 +89,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
     },
     buttonText: {
+        fontFamily: 'NeueMontreal-Medium',
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
     },
     orText: {
+        fontFamily: 'NeueMontreal-Regular',
         fontSize: 18,
         color: 'grey',
         marginHorizontal: 10,

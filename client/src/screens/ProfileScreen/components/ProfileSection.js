@@ -75,18 +75,21 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     name: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 22,
         fontWeight: 'bold',
         alignSelf: 'center',
         marginBottom: 4,
     },
     socialHandles: {
+        fontFamily: 'NeueMontreal-Regular',
         fontSize: 16,
         color: 'grey',
         alignSelf: 'center',
         marginBottom: 16,
     },
     description: {
+        fontFamily: 'NeueMontreal-Regular',
         fontSize: 14,
         paddingHorizontal: 32,
         color: 'grey',

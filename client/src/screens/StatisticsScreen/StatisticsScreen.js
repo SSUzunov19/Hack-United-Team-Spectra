@@ -60,20 +60,24 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   topText: {
+      fontFamily: 'NeueMontreal-Medium',
     fontSize: 32,
     fontWeight: '500',
   },
   bottomText: {
+    fontFamily: 'NeueMontreal-Light',
     fontSize: 20,
     color: '#8d8d8d',
   },
   heading: {
+    fontFamily: 'NeueMontreal-Medium',
     fontSize: 18,
     fontWeight: '500',
     marginLeft: 10,
     marginTop: 5,
   },
   headingRight: {
+    fontFamily: 'NeueMontreal-Medium',
     position: 'absolute',
     right: 0,
     marginRight: '5%',

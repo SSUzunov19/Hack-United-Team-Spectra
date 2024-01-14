@@ -71,11 +71,13 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
     },
     historyTitle: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 24,
         fontWeight: 'bold',
     },
     viewAllButton: {},
     viewAllText: {
+        fontFamily: 'NeueMontreal-Regular',
         fontSize: 16,
         color: '#8D8D8D',
         fontWeight: 'bold',
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     participantText: {
+        fontFamily: 'NeueMontreal-Medium',
         marginLeft: 8,
         color: '#000',
         fontSize: 16,
@@ -145,21 +148,25 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     challengeStatus: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 14,
         fontWeight: 'bold',
         color: '#000',
         marginBottom: 4,
     },
     challengeTitle: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 4,
     },
     challengeDescription: {
+        fontFamily: 'NeueMontreal-Regular',
         fontSize: 14,
         color: 'grey',
     },
     challengePrice: {
+        fontFamily: 'NeueMontreal-Medium',
         fontSize: 18,
         fontWeight: 'bold',
         color: '#000',
